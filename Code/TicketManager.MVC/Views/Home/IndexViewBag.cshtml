@@ -1,0 +1,43 @@
+﻿@using MultipleModelInOneView;
+@{
+    ViewBag.Title = "Home Page";
+}
+<h2>@ViewBag.Message</h2>
+
+<p><b>Teacher List</b></p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Code</th>
+        <th>Name</th>
+    </tr>
+    @foreach (Teacher teacher in ViewBag.Teachers)
+    {
+        <tr>
+            <td>@teacher.TeacherId</td>
+            <td>@teacher.Code</td>
+            <td>@teacher.Name</td>
+        </tr>
+    }
+</table>
+
+<p><b>Student List</b></p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Enrollment No</th>
+    </tr>
+    @foreach (Student student in ViewBag.Students)
+    {
+        <tr>
+            <td>@student.StudentId</td>
+            <td>@student.Code</td>
+            <td>@student.Name</td>
+            <td>@student.EnrollmentNo</td>
+        </tr>
+    }
+</table>

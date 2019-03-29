@@ -1,0 +1,53 @@
+﻿@model TicketManager.MVC.Models.tickethistory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tickethistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketHistoryDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketHistoryDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketHistoryDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketHistoryDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ticket.TicketIssueSubject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ticket.TicketIssueSubject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TicketHistoryId }) |
+</p>
+
+<p>
+    @Html.ActionLink("Back To Ticket", "BackToTicket", new { ticId = ViewBag.TicketOwner })
+</p>

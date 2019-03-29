@@ -1,0 +1,23 @@
+﻿@using MultipleModelInOneView;
+@model IEnumerable<MultipleModelInOneView.Student>
+
+<p><b>Student List</b></p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Enrollment No</th>
+    </tr>
+    @foreach (Student student in Model)
+    {
+        <tr>
+            <td>@student.StudentId</td>
+            <td>@student.Code</td>
+            <td>@student.Name</td>
+            <td>@student.EnrollmentNo</td>
+        </tr>
+    }
+</table>
+

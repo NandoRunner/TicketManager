@@ -1,0 +1,86 @@
+﻿@using TicketManager.MVC.Models;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Home Page";
+
+    IEnumerable<Check> checks = ViewData["Checks"] as IEnumerable<Check>;
+    IEnumerable<ticket> tickets = ViewData["Tickets"] as IEnumerable<ticket>;
+    bool statusFinalizado = ViewBag.Finalizados;
+    string param1 = "status-3";
+    string param2 = "status-3";
+
+    if (!statusFinalizado)
+    {
+        param1 = "status-1";
+        param2 = "status-2";
+    }
+
+}
+
+<script type="text/javascript">
+ function showhide(id) {
+    var e = document.getElementById(id);
+    e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+ }
+</script>
+
+<script>
+    $(function () {
+        pageGrids.TicketsGrid.row.onRowSelect(function (e) {
+            //alert(e.row.TicketId);
+        });
+    });
+</script>
+
+
+<h2>Ticket</h2>
+
+
+@*<table>
+    <tr>
+        <th>Status: </th>
+        @foreach (Check c in checks)
+        {
+            <td>@Html.CheckBox(c.Name, true) @c.Name </td>
+        }
+        <td>
+
+    </tr>
+</table>*@
+    <p>
+        @Html.ActionLink("Create New", "Create") | 
+        @Html.ActionLink("Exibir Finalizados", "Index", new { bFinalizados = true }) | 
+        @Html.ActionLink("Exibir Não Finalizados", "Index", new { bFinalizados = false })
+    </p>
+
+    <div>
+       @Html.Grid(tickets).Named("TicketsGrid").SetRowCssClasses(o => o.status.StatusId==1 ? param1 : param2).Columns(columns =>
+  {
+      columns.Add(o => o.TicketId).Titled("#").SetWidth(30).Sortable(true).Filterable(false);
+      columns.Add(o => o.TicketDate).Format("{0:dd/MM/yyyy}").Titled("Create Date").Sortable(true).Filterable(true);
+      columns.Add(o => o.TicketIssueSubject).Titled("Issue Subject").Sortable(true).Filterable(true);
+      columns.Add(o => o.customer.CustomerAbrev).Titled("Customer").Sortable(true).Filterable(true);
+      columns.Add(o => o.contact.ContactName).Titled("Contact Person").Sortable(true).Filterable(true);
+      columns.Add(o => o.status.StatusName).Titled("Status").SetWidth(130).Sortable(true).Filterable(true);
+      columns.Add(o => o.statusdetail.StatusDetailName).Titled("Position/Result").Sortable(true).Filterable(true);
+      columns.Add(o => o.user1.UserAbrev).Titled("Resp. User").Sortable(true).Filterable(true);
+      columns.Add()
+                      .Encoded(false)
+                      .Sanitized(false)
+                      .SetWidth(30)
+                      .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.TicketId }));
+      columns.Add()
+                      .Encoded(false)
+                      .Sanitized(false)
+                      .SetWidth(30)
+                      .RenderValueAs(o => Html.ActionLink("Details", "Details", new { id = o.TicketId }));
+      columns.Add()
+                      .Encoded(false)
+                      .Sanitized(false)
+                      .SetWidth(30)
+                      .RenderValueAs(o => Html.ActionLink("X", "Delete", new { id = o.TicketId }));
+  }).WithPaging(10)
+  </div>
+
+

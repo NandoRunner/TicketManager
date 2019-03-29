@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectCSharpToMySQL", "..\_Common\ConnectCSharpToMySQL\ConnectCSharpToMySQL.csproj", "{C6593631-7F39-49E1-B018-AEAFDD726C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketManager.BusinessRules", "Code\TicketManager.BusinessRules\TicketManager.BusinessRules.csproj", "{153B0D02-5358-47BD-AF3F-A3F12827F6EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketManager.OutlookAddIn", "Code\TicketManager.OutlookAddIn\TicketManager.OutlookAddIn.csproj", "{ACA11C18-66DC-4937-84D9-B3CD3841487D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		myDebug|Any CPU = myDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6593631-7F39-49E1-B018-AEAFDD726C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6593631-7F39-49E1-B018-AEAFDD726C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6593631-7F39-49E1-B018-AEAFDD726C25}.myDebug|Any CPU.ActiveCfg = myDebug|Any CPU
+		{C6593631-7F39-49E1-B018-AEAFDD726C25}.myDebug|Any CPU.Build.0 = myDebug|Any CPU
+		{C6593631-7F39-49E1-B018-AEAFDD726C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6593631-7F39-49E1-B018-AEAFDD726C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153B0D02-5358-47BD-AF3F-A3F12827F6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153B0D02-5358-47BD-AF3F-A3F12827F6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153B0D02-5358-47BD-AF3F-A3F12827F6EB}.myDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153B0D02-5358-47BD-AF3F-A3F12827F6EB}.myDebug|Any CPU.Build.0 = Debug|Any CPU
+		{153B0D02-5358-47BD-AF3F-A3F12827F6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153B0D02-5358-47BD-AF3F-A3F12827F6EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA11C18-66DC-4937-84D9-B3CD3841487D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA11C18-66DC-4937-84D9-B3CD3841487D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA11C18-66DC-4937-84D9-B3CD3841487D}.myDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA11C18-66DC-4937-84D9-B3CD3841487D}.myDebug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA11C18-66DC-4937-84D9-B3CD3841487D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA11C18-66DC-4937-84D9-B3CD3841487D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

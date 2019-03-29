@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="85cc9328e23f4029a4cf455aee017579" Name="Diagram1">
+        <EntityTypeShape EntityType="TicketDBModel.contact" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TicketDBModel.customer" Width="1.5" PointX="1.5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TicketDBModel.status" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="TicketDBModel.statusdetail" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TicketDBModel.ticket" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TicketDBModel.tickethistory" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TicketDBModel.user" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="TicketDBModel.FK_Cont_CustomerId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_Tic_ContactId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_Tic_CustomerId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_CusSta_StatusId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_Tic_StatusId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_Tic_StatusDetailId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_Tic_CreateUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_Tic_RespUserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_TicHis_TicketId" ManuallyRouted="false" />
+        <AssociationConnector Association="TicketDBModel.FK_TicHis_UserId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

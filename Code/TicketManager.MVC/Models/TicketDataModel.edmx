@@ -1,0 +1,607 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TicketDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="ContactName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ContactEmail" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="CustomerAbrev" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="statusdetail">
+          <Key>
+            <PropertyRef Name="StatusDetailId" />
+          </Key>
+          <Property Name="StatusDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="StatusDetailName" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="ContactId" Type="int" Nullable="false" />
+          <Property Name="CreateUserid" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="StatusDetailId" Type="int" />
+          <Property Name="TicketDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="TicketIssueSubject" Type="varchar" MaxLength="160" Nullable="false" />
+          <Property Name="TicketIssueDescription" Type="varchar" MaxLength="2000" />
+          <Property Name="RespUserId" Type="int" />
+          <Property Name="OutlookEntryId" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tickethistory">
+          <Key>
+            <PropertyRef Name="TicketHistoryId" />
+          </Key>
+          <Property Name="TicketHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="TicketHistoryUserId" Type="int" Nullable="false" />
+          <Property Name="TicketHistoryDetail" Type="varchar" MaxLength="800" Nullable="false" />
+          <Property Name="TicketHistoryDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="UserEmail" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="UserAbrev" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <Association Name="FK_Cont_CustomerId">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="contact" Type="Self.contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="contact">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CusSta_StatusId">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="statusdetail" Type="Self.statusdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="statusdetail">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_ContactId">
+          <End Role="contact" Type="Self.contact" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contact">
+              <PropertyRef Name="ContactId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_CreateUserId">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="CreateUserid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_CustomerId">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_RespUserId">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="RespUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_StatusDetailId">
+          <End Role="statusdetail" Type="Self.statusdetail" Multiplicity="0..1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusdetail">
+              <PropertyRef Name="StatusDetailId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="StatusDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_StatusId">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicHis_TicketId">
+          <End Role="ticket" Type="Self.ticket" Multiplicity="1" />
+          <End Role="tickethistory" Type="Self.tickethistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ticket">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="tickethistory">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicHis_UserId">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="tickethistory" Type="Self.tickethistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tickethistory">
+              <PropertyRef Name="TicketHistoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TicketDBModelStoreContainer">
+          <EntitySet Name="contact" EntityType="Self.contact" Schema="ticketdb" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="ticketdb" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="ticketdb" store:Type="Tables" />
+          <EntitySet Name="statusdetail" EntityType="Self.statusdetail" Schema="ticketdb" store:Type="Tables" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" Schema="ticketdb" store:Type="Tables" />
+          <EntitySet Name="tickethistory" EntityType="Self.tickethistory" Schema="ticketdb" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="ticketdb" store:Type="Tables" />
+          <AssociationSet Name="FK_Cont_CustomerId" Association="Self.FK_Cont_CustomerId">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="contact" EntitySet="contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CusSta_StatusId" Association="Self.FK_CusSta_StatusId">
+            <End Role="status" EntitySet="status" />
+            <End Role="statusdetail" EntitySet="statusdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_ContactId" Association="Self.FK_Tic_ContactId">
+            <End Role="contact" EntitySet="contact" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_CreateUserId" Association="Self.FK_Tic_CreateUserId">
+            <End Role="user" EntitySet="user" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_CustomerId" Association="Self.FK_Tic_CustomerId">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_RespUserId" Association="Self.FK_Tic_RespUserId">
+            <End Role="user" EntitySet="user" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_StatusDetailId" Association="Self.FK_Tic_StatusDetailId">
+            <End Role="statusdetail" EntitySet="statusdetail" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_StatusId" Association="Self.FK_Tic_StatusId">
+            <End Role="status" EntitySet="status" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicHis_TicketId" Association="Self.FK_TicHis_TicketId">
+            <End Role="ticket" EntitySet="ticket" />
+            <End Role="tickethistory" EntitySet="tickethistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicHis_UserId" Association="Self.FK_TicHis_UserId">
+            <End Role="user" EntitySet="user" />
+            <End Role="tickethistory" EntitySet="tickethistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TicketDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactEmail" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_Cont_CustomerId" FromRole="contact" ToRole="customer" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK_Tic_ContactId" FromRole="contact" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerAbrev" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="contact" Relationship="Self.FK_Cont_CustomerId" FromRole="customer" ToRole="contact" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK_Tic_CustomerId" FromRole="customer" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="statusdetail" Relationship="Self.FK_CusSta_StatusId" FromRole="status" ToRole="statusdetail" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK_Tic_StatusId" FromRole="status" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="statusdetail">
+          <Key>
+            <PropertyRef Name="StatusDetailId" />
+          </Key>
+          <Property Name="StatusDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="StatusDetailName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="status" Relationship="Self.FK_CusSta_StatusId" FromRole="statusdetail" ToRole="status" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK_Tic_StatusDetailId" FromRole="statusdetail" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ContactId" Type="Int32" Nullable="false" />
+          <Property Name="CreateUserid" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="StatusDetailId" Type="Int32" />
+          <Property Name="TicketDate" Type="DateTime" Nullable="false" />
+          <Property Name="TicketIssueSubject" Type="String" MaxLength="160" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TicketIssueDescription" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+          <Property Name="RespUserId" Type="Int32" />
+          <NavigationProperty Name="contact" Relationship="Self.FK_Tic_ContactId" FromRole="ticket" ToRole="contact" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_Tic_CustomerId" FromRole="ticket" ToRole="customer" />
+          <NavigationProperty Name="status" Relationship="Self.FK_Tic_StatusId" FromRole="ticket" ToRole="status" />
+          <NavigationProperty Name="statusdetail" Relationship="Self.FK_Tic_StatusDetailId" FromRole="ticket" ToRole="statusdetail" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Tic_CreateUserId" FromRole="ticket" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="Self.FK_Tic_RespUserId" FromRole="ticket" ToRole="user" />
+          <NavigationProperty Name="tickethistory" Relationship="Self.FK_TicHis_TicketId" FromRole="ticket" ToRole="tickethistory" />
+          <Property Name="OutlookEntryId" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tickethistory">
+          <Key>
+            <PropertyRef Name="TicketHistoryId" />
+          </Key>
+          <Property Name="TicketHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="TicketHistoryUserId" Type="Int32" Nullable="false" />
+          <Property Name="TicketHistoryDetail" Type="String" MaxLength="800" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TicketHistoryDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK_TicHis_TicketId" FromRole="tickethistory" ToRole="ticket" />
+          <NavigationProperty Name="user" Relationship="Self.FK_TicHis_UserId" FromRole="tickethistory" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserEmail" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK_Tic_CreateUserId" FromRole="user" ToRole="ticket" />
+          <NavigationProperty Name="ticket1" Relationship="Self.FK_Tic_RespUserId" FromRole="user" ToRole="ticket" />
+          <NavigationProperty Name="tickethistory" Relationship="Self.FK_TicHis_UserId" FromRole="user" ToRole="tickethistory" />
+          <Property Name="UserAbrev" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Cont_CustomerId">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="contact" Type="Self.contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="contact">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_ContactId">
+          <End Role="contact" Type="Self.contact" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="contact">
+              <PropertyRef Name="ContactId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_CustomerId">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CusSta_StatusId">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="statusdetail" Type="Self.statusdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="statusdetail">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_StatusId">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_StatusDetailId">
+          <End Role="statusdetail" Type="Self.statusdetail" Multiplicity="0..1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusdetail">
+              <PropertyRef Name="StatusDetailId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="StatusDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_CreateUserId">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="CreateUserid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tic_RespUserId">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="RespUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicHis_TicketId">
+          <End Role="ticket" Type="Self.ticket" Multiplicity="1" />
+          <End Role="tickethistory" Type="Self.tickethistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ticket">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="tickethistory">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicHis_UserId">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="tickethistory" Type="Self.tickethistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tickethistory">
+              <PropertyRef Name="TicketHistoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TicketDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="contact" EntityType="Self.contact" />
+          <EntitySet Name="customer" EntityType="Self.customer" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="statusdetail" EntityType="Self.statusdetail" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" />
+          <EntitySet Name="tickethistory" EntityType="Self.tickethistory" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <AssociationSet Name="FK_Cont_CustomerId" Association="Self.FK_Cont_CustomerId">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="contact" EntitySet="contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_ContactId" Association="Self.FK_Tic_ContactId">
+            <End Role="contact" EntitySet="contact" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_CustomerId" Association="Self.FK_Tic_CustomerId">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CusSta_StatusId" Association="Self.FK_CusSta_StatusId">
+            <End Role="status" EntitySet="status" />
+            <End Role="statusdetail" EntitySet="statusdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_StatusId" Association="Self.FK_Tic_StatusId">
+            <End Role="status" EntitySet="status" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_StatusDetailId" Association="Self.FK_Tic_StatusDetailId">
+            <End Role="statusdetail" EntitySet="statusdetail" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_CreateUserId" Association="Self.FK_Tic_CreateUserId">
+            <End Role="user" EntitySet="user" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tic_RespUserId" Association="Self.FK_Tic_RespUserId">
+            <End Role="user" EntitySet="user" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicHis_TicketId" Association="Self.FK_TicHis_TicketId">
+            <End Role="ticket" EntitySet="ticket" />
+            <End Role="tickethistory" EntitySet="tickethistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicHis_UserId" Association="Self.FK_TicHis_UserId">
+            <End Role="user" EntitySet="user" />
+            <End Role="tickethistory" EntitySet="tickethistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TicketDBModelStoreContainer" CdmEntityContainer="TicketDBEntities">
+          <EntitySetMapping Name="contact">
+            <EntityTypeMapping TypeName="TicketDBModel.contact">
+              <MappingFragment StoreEntitySet="contact">
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="TicketDBModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerAbrev" ColumnName="CustomerAbrev" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="TicketDBModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statusdetail">
+            <EntityTypeMapping TypeName="TicketDBModel.statusdetail">
+              <MappingFragment StoreEntitySet="statusdetail">
+                <ScalarProperty Name="StatusDetailId" ColumnName="StatusDetailId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="StatusDetailName" ColumnName="StatusDetailName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ticket">
+            <EntityTypeMapping TypeName="TicketDBModel.ticket">
+              <MappingFragment StoreEntitySet="ticket">
+                <ScalarProperty Name="OutlookEntryId" ColumnName="OutlookEntryId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="CreateUserid" ColumnName="CreateUserid" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="StatusDetailId" ColumnName="StatusDetailId" />
+                <ScalarProperty Name="TicketDate" ColumnName="TicketDate" />
+                <ScalarProperty Name="TicketIssueSubject" ColumnName="TicketIssueSubject" />
+                <ScalarProperty Name="TicketIssueDescription" ColumnName="TicketIssueDescription" />
+                <ScalarProperty Name="RespUserId" ColumnName="RespUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tickethistory">
+            <EntityTypeMapping TypeName="TicketDBModel.tickethistory">
+              <MappingFragment StoreEntitySet="tickethistory">
+                <ScalarProperty Name="TicketHistoryId" ColumnName="TicketHistoryId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="TicketHistoryUserId" ColumnName="TicketHistoryUserId" />
+                <ScalarProperty Name="TicketHistoryDetail" ColumnName="TicketHistoryDetail" />
+                <ScalarProperty Name="TicketHistoryDate" ColumnName="TicketHistoryDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="TicketDBModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="UserAbrev" ColumnName="UserAbrev" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

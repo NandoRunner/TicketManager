@@ -1,0 +1,108 @@
+﻿@using TicketManager.MVC.Models;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Details";
+
+    IEnumerable<tickethistory> his = ViewData["Histories"] as IEnumerable<tickethistory>;
+    ticket tic = ViewData["Tickets"] as ticket;
+}
+<h2>Details</h2>
+
+<div ="TicketDetails">
+    <h4>ticket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            # @Html.DisplayFor(model => tic.TicketId)
+        </dt>
+        
+        <dd>
+            @Html.DisplayFor(model => tic.TicketIssueSubject)
+        </dd>
+        
+        <dt>
+            @Html.LabelFor(model => tic.TicketDate)
+        </dt>
+        
+        <dd>
+            @Html.DisplayFor(model => tic.TicketDate)
+        </dd>
+        
+        <dt>
+            @Html.LabelFor(model => tic.TicketIssueDescription)
+        </dt>
+        
+        <dd>
+            @Html.DisplayFor(model => tic.TicketIssueDescription)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => tic.customer.CustomerName, "Customer")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => tic.customer.CustomerAbrev)  ->  @Html.DisplayFor(model => tic.contact.ContactName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => tic.status.StatusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => tic.status.StatusName)  ->  @Html.DisplayFor(model => tic.statusdetail.StatusDetailName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => tic.user1.UserName, "Resp. User")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => tic.user1.UserAbrev)
+        </dd>
+        <dt>
+            @Html.LabelFor(model => tic.OutlookEntryId, "Outlook EntryID")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => tic.OutlookEntryId)
+        </dd>
+
+
+    </dl>
+</div>
+    @*<p>
+        @Html.ActionLink("Histórico", "ViewHistory", new { id = tic.TicketId })
+    </p>*@
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = tic.TicketId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+<div name="HistoriesGrid">
+    @Html.Grid(his).Named("HistoriesGrid").Columns(columns =>
+{
+    columns.Add(o => o.TicketHistoryDate).Format("{0:dd/MM/yyyy}").Titled("History Date").Sortable(true);
+    columns.Add(o => o.TicketHistoryDetail).Titled("History/Comment").Sortable(false);
+    columns.Add(o => o.user.UserAbrev).Titled("Resp. User").Sortable(false);
+
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Edit", "EditHistory", new { hisId = o.TicketHistoryId, ticId = o.TicketId }));
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Details", "DetailsHistory", new { hisId = o.TicketHistoryId, ticId = o.TicketId }));
+
+}).WithPaging(5)
+
+</div>
+<br />
+<p>
+    @Html.ActionLink("New History", "CreateHistory", new { ticId = tic.TicketId })
+</p>
+

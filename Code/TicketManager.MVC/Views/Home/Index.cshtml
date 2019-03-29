@@ -1,0 +1,63 @@
+﻿@using TicketManager.MVC.Models;
+@model dynamic 
+@{
+    ViewBag.Title = "Home Page";
+}
+<h2>@ViewBag.Message</h2>
+
+
+<p><b>Status List</b></p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Checked</th>
+    </tr>
+    @foreach (Check c in Model.Checks)
+    {
+        <tr>
+            <td>@c.Id</td>
+            <td>@c.Name</td>
+            <td>@c.Checked</td>
+        </tr>
+    }
+</table>
+
+<p><b>Teacher List</b></p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Code</th>
+        <th>Name</th>
+    </tr>
+    @foreach (Teacher teacher in Model.Teachers)
+    {
+        <tr>
+            <td>@teacher.TeacherId</td>
+            <td>@teacher.Code</td>
+            <td>@teacher.Name</td>
+        </tr>
+    }
+</table>
+
+<p><b>Student List</b></p>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Enrollment No</th>
+    </tr>
+    @foreach (Student student in Model.Students)
+    {
+        <tr>
+            <td>@student.StudentId</td>
+            <td>@student.Code</td>
+            <td>@student.Name</td>
+            <td>@student.EnrollmentNo</td>
+        </tr>
+    }
+</table>

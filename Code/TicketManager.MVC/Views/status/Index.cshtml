@@ -1,0 +1,38 @@
+﻿@using TicketManager.MVC.Models;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Status";
+
+    IEnumerable<status> statuss = ViewData["Status"] as IEnumerable<status>;
+}
+
+<h2>Status List</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+<div>
+   @Html.Grid(statuss).Named("StatusGrid").Columns(columns =>
+{
+    columns.Add(o => o.StatusId).Titled("Id").SetWidth(80).Sortable(true);
+    columns.Add(o => o.StatusName).Titled("Status Name").Sortable(true);
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.StatusId }));
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Details", "Details", new { id = o.StatusId }));
+    columns.Add()
+              .Encoded(false)
+              .Sanitized(false)
+              .SetWidth(30)
+              .RenderValueAs(o => Html.ActionLink("X", "Delete", new { id = o.StatusId }));
+}).WithPaging(10)
+
+</div>

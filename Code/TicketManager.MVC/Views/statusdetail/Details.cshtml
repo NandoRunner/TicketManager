@@ -1,0 +1,34 @@
+﻿@model TicketManager.MVC.Models.statusdetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>statusdetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusDetailName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusDetailName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status.StatusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status.StatusName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StatusDetailId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

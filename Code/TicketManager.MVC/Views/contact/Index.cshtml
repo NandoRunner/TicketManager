@@ -1,0 +1,40 @@
+﻿@using TicketManager.MVC.Models;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Contact Person List";
+
+    IEnumerable<contact> contacts = ViewData["Contacts"] as IEnumerable<contact>;
+}
+
+<h2>Contact Person List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div>
+    @Html.Grid(contacts).Named("ContactsGrid").Columns(columns =>
+{
+    columns.Add(o => o.customer.CustomerAbrev).Titled("Customer").SetWidth(100).Sortable(true).Filterable(true);
+    columns.Add(o => o.ContactName).Titled("Name").SetWidth(200).Sortable(true).Filterable(true);
+    columns.Add(o => o.ContactEmail).Titled("Email").Sortable(false).Filterable(true);
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.ContactId }));
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Details", "Details", new { id = o.ContactId }));
+    columns.Add()
+              .Encoded(false)
+              .Sanitized(false)
+              .SetWidth(30)
+              .RenderValueAs(o => Html.ActionLink("X", "Delete", new { id = o.ContactId }));
+}).WithPaging(10)
+
+</div>
+

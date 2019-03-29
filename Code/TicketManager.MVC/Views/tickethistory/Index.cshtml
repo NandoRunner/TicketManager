@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TicketManager.MVC.Models.tickethistory>
+
+@{
+    ViewBag.Title = "Ticket History";
+}
+
+<h2>Ticket #@ViewBag.TicketId History</h2>
+
+<p> 
+    @Html.ActionLink("New Action", "Create", new { TicketOwner = ViewBag.TicketId })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TicketHistoryDetail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TicketHistoryDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ticket.TicketIssueSubject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.UserAbrev)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TicketHistoryDetail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TicketHistoryDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ticket.TicketIssueSubject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TicketHistoryId }) |
+        </td>
+    </tr>
+}
+
+</table>
+
+<p>
+    @Html.ActionLink("Back To Ticket", "BackToTicket", new { ticId = ViewBag.TicketId })
+</p>

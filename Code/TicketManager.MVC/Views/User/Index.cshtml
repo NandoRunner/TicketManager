@@ -1,0 +1,75 @@
+﻿@using TicketManager.MVC.Models;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "User";
+
+    IEnumerable<user> users = ViewData["Users"] as IEnumerable<user>;
+}
+
+<h2>User List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div>
+    @Html.Grid(users).Named("UsersGrid").Columns(columns =>
+{
+    columns.Add(o => o.UserAbrev).Titled("User Abrev.").SetWidth(100).Sortable(true).Filterable(true);
+    columns.Add(o => o.UserName).SetWidth(200).Sortable(true).Filterable(true);
+    columns.Add(o => o.UserEmail).Titled("Email").Sortable(false).Filterable(true);
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Edit", "Edit", new { id = o.UserId }));
+    columns.Add()
+                     .Encoded(false)
+                     .Sanitized(false)
+                     .SetWidth(30)
+                     .RenderValueAs(o => Html.ActionLink("Details", "Details", new { id = o.UserId }));
+    columns.Add()
+              .Encoded(false)
+              .Sanitized(false)
+              .SetWidth(30)
+              .RenderValueAs(o => Html.ActionLink("X", "Delete", new { id = o.UserId }));
+}).WithPaging(10)
+
+</div>
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserAbrev)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.UserEmail)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserAbrev)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserEmail)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+        </td>
+    </tr>
+}
+
+</table>*@

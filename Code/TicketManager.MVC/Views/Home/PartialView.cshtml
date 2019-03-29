@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "PartialView";
+}
+<h2>@ViewBag.Message</h2>
+<div>
+    @{
+        Html.RenderAction("RenderTeacher");
+        Html.RenderAction("RenderStudent");
+    }
+</div>

@@ -1,0 +1,184 @@
+﻿@model TicketManager.MVC.Models.ticket
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    jQuery(function ($) {
+        $.validator.addMethod('date',
+        function (value, element) {
+            if (this.optional(element)) {
+                return true;
+            }
+
+            var ok = true;
+            try {
+                $.datepicker.parseDate('dd/mm/yy', value);
+            }
+            catch (err) {
+                ok = false;
+            }
+            return ok;
+        });
+    });
+
+    $(function () {
+        $("#TicketDate").datepicker({ dateFormat: 'dd/mm/yy' });
+        $("#TicketDate").datepicker('setDate', new Date());
+    });
+
+
+    $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#StatusId").change(function () {
+            $("#StatusDetailId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStatusDetail")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#StatusId").val() },
+               // here we are get value of selected country and passing same value as inputto json method GetStates.
+                success: function (states) {
+                    // states contains the JSON formatted list passed from the controller
+                    $("#StatusDetailId").append('<option value="">- Selecione uma posição/resultado -</option>');
+                    $.each(states, function (i, state) {
+                        $("#StatusDetailId").append('<option value="' + state.Value + '">' +
+                         state.Text + '</option>');
+                    // here we are adding option
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve status details.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+
+    $(document).ready(function () {
+        $("#CustomerId").change(function () {
+            $("#ContactId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetContact")',
+                dataType: 'json',
+                data: { id: $("#CustomerId").val() },
+                success: function (contacts) {
+                    $.each(contacts, function (i, contact) {
+                        $("#ContactId").append('<option value="' + contact.Value + '">' +
+                         contact.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve contacts.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Ticket</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerId", ViewData["customerList"] as List<SelectListItem>, "- Select a Customer -", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactId, "Contact Person", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ContactId", new SelectList(string.Empty, "Value", "Text"), "- Select a Contact Person -", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ContactId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreateUserid, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CreateUserid", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CreateUserid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("StatusId", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownList("StatusId", ViewData["statusList"] as List<SelectListItem>, "- Selecione o status -", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StatusDetailId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("StatusDetailId", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownList("StatusDetailId", new SelectList(string.Empty, "Value", "Text"), "- Selecione a posição/resultado -", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StatusDetailId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TicketDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TicketDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketIssueSubject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TicketIssueSubject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TicketIssueSubject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketIssueDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TicketIssueDescription, new { htmlAttributes = new { @class = "form-control", rows = "5" } })
+                @Html.ValidationMessageFor(model => model.TicketIssueDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RespUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("RespUserId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RespUserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
