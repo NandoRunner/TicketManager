@@ -175,6 +175,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="App - Dev.Config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectCSharpToMySQL", "..\_Common\ConnectCSharpToMySQL\ConnectCSharpToMySQL.csproj", "{C6593631-7F39-49E1-B018-AEAFDD726C25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectCSharpToMySQL", "..\_Resource\ConnectCSharpToMySQL\ConnectCSharpToMySQL.csproj", "{C6593631-7F39-49E1-B018-AEAFDD726C25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketManager.BusinessRules", "Code\TicketManager.BusinessRules\TicketManager.BusinessRules.csproj", "{153B0D02-5358-47BD-AF3F-A3F12827F6EB}"
 EndProject
@@ -37,5 +37,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49D14FA8-3D68-4FF1-92D1-78F21CC43559}
 	EndGlobalSection
 EndGlobal
