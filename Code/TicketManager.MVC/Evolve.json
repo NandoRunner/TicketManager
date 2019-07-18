@@ -1,0 +1,8 @@
+{
+  "Evolve.Driver": "MySQL.Data",
+  //"Evolve.ConnectionString": "Server=mysql7001.site4now.net;DataBase=db_a3f268_myasp;Uid=a3f268_myasp;Pwd=Runbjj1!m;persistsecurityinfo=True;",
+  "Evolve.ConnectionString": "server=localhost;uid=ticketdb_user;pwd=ticketdb_user;persistsecurityinfo=True;database=TicketDB",
+  "Evolve.Locations": "db",
+  "Evolve.Command": "migrate",
+  "Evolve.Placeholder.table4": "table_4"
+}
